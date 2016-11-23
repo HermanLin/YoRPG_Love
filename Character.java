@@ -10,11 +10,14 @@ public abstract class Character {
     protected int defense;
     protected double attackRating;
     protected String name;
+    protected int money;
+    protected int potions;
+    /*
     protected int specDef;
     protected double specAttRate;
     protected int normDef;
     protected double normAttRate;
-
+    */
     public Character () {
 	name = "";
       	life = 125;
@@ -40,6 +43,14 @@ public abstract class Character {
 
     public int getDefense (){
 	return defense;
+    }
+    
+    public int getMoney (){
+	return money;
+    }
+
+    public int getPotion (){
+	return potions;
     }
 
     public void lowerHP (int decrease) {
