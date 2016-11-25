@@ -12,10 +12,7 @@ public class Pirate extends Character {
 	defense = 40;
 	attackRating = .6;
 
-	specDef = 5;
-	specAttRate = 1;
-	normDef = 40;
-	normAttRate = .6;
+
     }
     public Pirate (String names) {
 	this ();

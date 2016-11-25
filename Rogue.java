@@ -12,10 +12,6 @@ public class Rogue extends Character {
 	defense = 30;
 	attackRating = .6;
 
-	specDef = 15;
-	specAttRate = .80;
-	normDef = 30;
-	normAttRate = .6;
     }
     public Rogue (String names) {
 	this ();

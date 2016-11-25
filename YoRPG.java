@@ -187,6 +187,57 @@ public class YoRPG
     }//end playTurn()
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+    public void bossTurn () {
+
+	int i = 1;
+	int d1, d2;
+	
+	Boss morgan = new Boss();
+
+	System.out.println ("Lo, boss monster approacheth");
+
+	while (morgan.isAlive () & pat.isAlive ()) {
+		try {
+		    System.out.println( "\nDo you feel lucky?" );
+		    System.out.println( "\t1: Nay.\n\t2: Aye!" );
+		    i = Integer.parseInt( in.readLine() );
+		}
+		catch ( IOException e ) { }
+
+		if ( i == 2 )
+		    pat.specialize();
+		else
+		    pat.normalize();
+
+		d1 = pat.attack( morgan );
+		d2 = morgan.attack( pat );
+
+		System.out.println( "\n" + pat.getName() + " dealt " + d1 +
+				    " points of damage.");
+
+		System.out.println( "\n" + "Ye Boss Monster smacked " + pat.getName() +
+				    " for " + d2 + " points of damage.");
+	}
+
+        
+	    if ( !morgan.isAlive() && !pat.isAlive() ) {
+		System.out.println( "'Twas an epic battle, to be sure... " + 
+				    "You cut ye boss monster down, but " +
+				    "with its dying breath ye boss monster. " +
+				    "laid a fatal blow upon thy skull." );
+
+	    }
+
+	    else if ( !morgan.isAlive() ) {
+		System.out.println( "HuzzaaH! Ye boss monster hath been slain!" );
+
+	    }
+	    
+	    else if ( !pat.isAlive() ) {
+		System.out.println( "Ye olde self hath expired. You got dead." );
+        
+	    }
+    }
 
     public static void main( String[] args )
     {
@@ -205,6 +256,12 @@ public class YoRPG
 	    encounters++;
 	    System.out.println();
 	}
+
+	if (game.playTurn()){
+	    game.bossTurn ();
+	}
+
+
 
 	System.out.println( "Thy game doth be over." );
     }//end main

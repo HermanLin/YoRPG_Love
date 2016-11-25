@@ -12,10 +12,6 @@ public class Archer extends Character {
 	defense = 30;
 	attackRating = .65;
 
-	specDef = 10;
-	specAttRate = .90;
-	normDef = 30;
-	normAttRate = .65;
     }
     public Archer (String names) {
 	this ();

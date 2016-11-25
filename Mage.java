@@ -12,10 +12,6 @@ public class Mage extends Character {
 	defense = 30;
 	attackRating = .65;
 
-	specDef = 15;
-	specAttRate = .85;
-	normDef = 30;
-	normAttRate = .65;
     }
     public Mage (String names) {
 	this ();
