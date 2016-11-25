@@ -24,11 +24,6 @@ public abstract class Character {
 	strength = 100;
 	defense = 40;
 	attackRating = .4;
-
-	specDef = 20;
-	specAttRate = .75;
-	normDef = 40;
-	normAttRate = .4;
     }
 
     public boolean isAlive() {
