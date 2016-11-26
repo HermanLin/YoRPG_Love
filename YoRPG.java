@@ -1,7 +1,7 @@
 /*Herman Lin, Jenny Han (Team Love)
-APCS1 - pd4
-HW32 -- Ye Olde Role Playing Game, Expanded
-2016-11-20*/
+  APCS1 - pd4
+  HW35 -- Ye Olde Role Playing Game, Realized
+  2016-11-25*/
 
 /*=============================================
   class YoRPG -- Driver file for Ye Olde Role Playing Game.
@@ -27,7 +27,7 @@ public class YoRPG
     private boolean gameOver;
     private int difficulty;
     private int characterTypeNum;
-
+    private int storeLoop = 0;
 
     private InputStreamReader isr;
     private BufferedReader in;
@@ -59,7 +59,9 @@ public class YoRPG
 	String s;
 	String name = "";
 	s = "~~~ Welcome to Ye Olde RPG! ~~~\n";
-
+	
+	//==========CHARACTER SELECTION==========
+	
 	s += "\nChoose your difficulty: \n";
 	s += "\t1: Easy\n";
 	s += "\t2: Not so easy\n";
@@ -72,6 +74,8 @@ public class YoRPG
 	}
 	catch ( IOException e ) { }
 
+	//=========CLASS SELECTION=============
+	
 	s = "Choose your character: \n";
 	s += "\t1: Warrior\n";
 	s += "\t2: Mage\n";
@@ -86,7 +90,8 @@ public class YoRPG
 	}
 	catch ( IOException e ) { }
 
-
+	//============NAME SELECTION==============
+	
 	s = "Intrepid player, what doth thy call thyself? (State your name): ";
 	System.out.print( s );
 
@@ -95,7 +100,7 @@ public class YoRPG
 	}
 	catch ( IOException e ) { }
 
-	//instantiate the player's character
+	//=========INSTANTIATION OF PLAYER CHARACTER=========
 
 	if (characterTypeNum == 1) {
 	    pat = new Warrior (name);
@@ -137,22 +142,41 @@ public class YoRPG
 	    smaug = new Monster();
 
 	    while( smaug.isAlive() && pat.isAlive() ) {
-
+		
 		// Give user the option of using a special attack:
 		// If you land a hit, you incur greater damage,
 		// ...but if you get hit, you take more damage.
+		System.out.println( pat.getLife() );
 		try {
 		    System.out.println( "\nDo you feel lucky?" );
 		    System.out.println( "\t1: Nay.\n\t2: Aye!" );
+		    System.out.println( "\t3: Use Potion! Potions Available: " + pat.getPotion());
 		    i = Integer.parseInt( in.readLine() );
 		}
 		catch ( IOException e ) { }
 
+		//=======SPECIALIZED ATTACK========
+		
 		if ( i == 2 )
 		    pat.specialize();
 		else
 		    pat.normalize();
 
+		//===========USING POTION==========
+		
+		if ( i == 3 ) {
+		    if ( pat.getPotion() > 0 ) {
+			pat.subPotion( 1 );
+			pat.usePotion( pat );
+			System.out.println( "50 HP restored!" );
+		    }
+		    else {
+			System.out.println( "You don't have a potion!" );
+		    }
+		}
+
+		//=========NORMAL ATTACK==========
+		
 		d1 = pat.attack( smaug );
 		d2 = smaug.attack( pat );
 
@@ -174,6 +198,38 @@ public class YoRPG
 	    //option 2: you slay the beast
 	    else if ( !smaug.isAlive() ) {
 		System.out.println( "HuzzaaH! Ye olde monster hath been slain!" );
+		pat.addMoney(20);
+		System.out.println( " " );
+
+		//===========POTION STORE===========
+		
+		System.out.println( "Welcome to the Potion Shoppe" );
+		while (storeLoop != 2) {
+		    System.out.println( "\tGold Pouch: " + pat.getMoney() );
+		    try {
+			System.out.println( "\t1: Potion of Healing - 30 Gold" );
+			System.out.println( "\t2: Exit Shop" );
+			i = Integer.parseInt( in.readLine() );
+		    }
+		    catch ( IOException e) { }
+
+		    if ( i == 1 ) {
+			if ( pat.getMoney() >= 30 ) {
+			    System.out.println( "Here's your Potion of Healing!" );
+			    pat.subMoney(30);
+			    pat.addPotion(1);
+			    storeLoop = i;
+			}
+			else {
+			    System.out.println( "You don't have enough gold." );
+			}
+		    }
+		    if ( i == 2 ) {
+			storeLoop = i;
+			System.out.println( "Good luck on your adventure!" );
+		    }
+		}
+		storeLoop = 0;
 		return true;
 	    }
 	    //option 3: the beast slays you
@@ -197,46 +253,64 @@ public class YoRPG
 	System.out.println ("Lo, boss monster approacheth");
 
 	while (morgan.isAlive () & pat.isAlive ()) {
-		try {
-		    System.out.println( "\nDo you feel lucky?" );
-		    System.out.println( "\t1: Nay.\n\t2: Aye!" );
-		    i = Integer.parseInt( in.readLine() );
+	    System.out.println( pat.getLife() );
+	    try {
+		System.out.println( "\nDo you feel lucky?" );
+		System.out.println( "\t1: Nay.\n\t2: Aye!" );
+		System.out.println( "\t3: Use Potion! Potions Available: " + pat.getPotion());
+		i = Integer.parseInt( in.readLine() );
+	    }
+	    catch ( IOException e ) { }
+
+	    //==========SPECIALIZED ATTACK===========
+	    
+	    if ( i == 2 )
+		pat.specialize();
+	    else
+		pat.normalize();
+
+	    //===========USING POTION===========
+	    
+	    if ( i == 3 ) {
+		if ( pat.getPotion() > 0 ) {
+		    pat.subPotion( 1 );
+		    pat.usePotion( pat );
+		    System.out.println( "50 HP restored!" );
 		}
-		catch ( IOException e ) { }
+		else {
+		    System.out.println( "You don't have a potion!" );
+		}
+	    }
 
-		if ( i == 2 )
-		    pat.specialize();
-		else
-		    pat.normalize();
+	    //===========NORMAL ATTACK===========
+	    
+	    d1 = pat.attack( morgan );
+	    d2 = morgan.attack( pat );
 
-		d1 = pat.attack( morgan );
-		d2 = morgan.attack( pat );
+	    System.out.println( "\n" + pat.getName() + " dealt " + d1 +
+				" points of damage.");
 
-		System.out.println( "\n" + pat.getName() + " dealt " + d1 +
-				    " points of damage.");
+	    System.out.println( "\n" + "Ye Boss Monster smacked " + pat.getName() +
+				" for " + d2 + " points of damage.");
+	}
+        
+	if ( !morgan.isAlive() && !pat.isAlive() ) {
+	    System.out.println( "'Twas an epic battle, to be sure... " + 
+				"You cut ye boss monster down, but " +
+				"with its dying breath ye boss monster. " +
+				"laid a fatal blow upon thy skull." );
 
-		System.out.println( "\n" + "Ye Boss Monster smacked " + pat.getName() +
-				    " for " + d2 + " points of damage.");
 	}
 
-        
-	    if ( !morgan.isAlive() && !pat.isAlive() ) {
-		System.out.println( "'Twas an epic battle, to be sure... " + 
-				    "You cut ye boss monster down, but " +
-				    "with its dying breath ye boss monster. " +
-				    "laid a fatal blow upon thy skull." );
+	else if ( !morgan.isAlive() ) {
+	    System.out.println( "HuzzaaH! Ye boss monster hath been slain!" );
 
-	    }
-
-	    else if ( !morgan.isAlive() ) {
-		System.out.println( "HuzzaaH! Ye boss monster hath been slain!" );
-
-	    }
+	}
 	    
-	    else if ( !pat.isAlive() ) {
-		System.out.println( "Ye olde self hath expired. You got dead." );
+	else if ( !pat.isAlive() ) {
+	    System.out.println( "Ye olde self hath expired. You got dead." );
         
-	    }
+	}
     }
 
     public static void main( String[] args )

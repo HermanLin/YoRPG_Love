@@ -4,6 +4,8 @@ HW32 -- Ye Olde Role Playing Game, Expanded
 2016-11-20*/
 
 public class Monster extends Character{
+
+    //=========INSTANTIATE MONSTER STATS=========
     
     public Monster () {
 	name = "monster";
@@ -14,6 +16,9 @@ public class Monster extends Character{
     }
     public void specialize() {}
     public void normalize(){}
+
+    //==========ABOUT THE MONSTER==========
+    
     public String about () {
 	String retStr = "";
 	retStr += "Name         : " + name + "\n";

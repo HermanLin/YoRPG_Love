@@ -1,17 +1,21 @@
 /*Herman Lin, Jenny Han (Team Love)
 APCS1 - pd4
-HW32 -- Ye Olde Role Playing Game, Expanded
-2016-11-20*/
+HW35 -- Ye Olde Role Playing Game, Realized
+2016-11-25*/
 
 public class Warrior extends Character{
+    //INSTANTIATE CHARACTER STATS
     public Warrior () {
 	super ();
     }
+
+    //SET CHARACTER NAME
     public Warrior (String names) {
 	this ();
 	name = names;
     }
-    
+
+    //SPECIALIZED ATTACK FOR CHARACTER
     public void specialize (){
 	defense = 20;
 	attackRating = .75;
@@ -21,6 +25,7 @@ public class Warrior extends Character{
 	attackRating = .4;
     }
 
+    //GET CHARACTER STATS
     public String about () {
 	String retStr = "";
 	retStr += "Name         : " + name + "\n";
@@ -28,6 +33,8 @@ public class Warrior extends Character{
 	retStr += "Strength     : " + strength + "\n";
 	retStr += "Defense      : " + defense + "\n";
 	retStr += "Attack Rating: " + attackRating + "\n";
+	retStr += "Gold Pouch   : " + money + "\n";
+	retStr += "Potion Bag   : " + potions + "\n";
 	return retStr;
     }
 }
