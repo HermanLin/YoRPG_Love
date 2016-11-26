@@ -7,7 +7,7 @@ public class Boss extends Monster {
 	strength = (int) ((Math.random() * 45 ) + 40);
 	life = 175;
 	defense = 30;
-	attackRating = 1.2;
+	attackRating = 1.3;
     }
 
     //=========ABOUT THE BOSS==========
